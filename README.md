@@ -7,7 +7,7 @@
 ![stars](https://img.shields.io/github/stars/skhanal5/BioScraper?style=social)
 
 A webscraping tool made with Instagram4J that allows users to go through any given Instgram profile and query through their
-followers and filter out any followers based on a search criteria dependent on their biography. 
+followers based on a search criteria dependent on their biography. 
 
 ## Disclaimer
 
