@@ -2,11 +2,11 @@
   <img width="500px" src="https://user-images.githubusercontent.com/74752121/122131096-a8ad7e00-ce06-11eb-8099-b99763ac113a.png">
 </p>
 
-![language](https://img.shields.io/github/languages/top/skhanal5/BioScraper)
-![license](https://img.shields.io/github/license/skhanal5/BioScraper)
-![commit](https://img.shields.io/github/last-commit/skhanal5/BioScraper)
-![issues](https://img.shields.io/github/issues/skhanal5/bioscraper)
-![stars](https://img.shields.io/github/stars/skhanal5/BioScraper?style=social)
+![language](https://img.shields.io/github/languages/top/skhanal5/biosearcher)
+![license](https://img.shields.io/github/license/skhanal5/biosearcher)
+![commit](https://img.shields.io/github/last-commit/skhanal5/biosearcher)
+![issues](https://img.shields.io/github/issues/skhanal5/biosearcher)
+![stars](https://img.shields.io/github/stars/skhanal5/biosearcher?style=social)
 
 A program made with Instagram4J that allows users to go through any given Instagram profile and query through their
 followers based on a search criteria dependent on their biography. 
