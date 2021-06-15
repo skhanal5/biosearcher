@@ -1,4 +1,6 @@
-# BioScraper
+<p align="center">
+  <img width="500px" src="https://user-images.githubusercontent.com/74752121/122131096-a8ad7e00-ce06-11eb-8099-b99763ac113a.png">
+</p>
 
 ![language](https://img.shields.io/github/languages/top/skhanal5/BioScraper)
 ![license](https://img.shields.io/github/license/skhanal5/BioScraper)
