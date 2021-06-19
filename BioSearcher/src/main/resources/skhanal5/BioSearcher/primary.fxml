@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skhanal5.BioSearcher.PrimaryController">
+   <children>
+      <Pane fx:id="signInPane" nodeOrientation="LEFT_TO_RIGHT" prefHeight="720.0" prefWidth="533.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Hyperlink layoutX="207.0" layoutY="594.0" onMouseClicked="#createAccount" styleClass="hyperlinks" text="Create Account">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink layoutX="213.0" layoutY="614.0" onMouseClicked="#redirectWindow" styleClass="hyperlinks" text="Can't sign in?" textFill="#898a872a">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Hyperlink>
+            <Label layoutX="113.0" layoutY="173.0" text="Welcome Back!">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="218.0" text="Log in using your Instagram account to continue" textFill="#00000074">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="loginButton" alignment="CENTER" disable="true" layoutX="111.0" layoutY="475.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="45.0" prefWidth="302.0" styleClass="login-button" text="Sign in" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label layoutX="112.0" layoutY="275.0" text="Username" />
+            <Label layoutX="112.0" layoutY="351.0" text="Password" />
+            <TextField fx:id="usernameField" layoutX="112.0" layoutY="298.0" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" promptText="Enter your username" style="-fx-alignment: center;" styleClass="sign-in-text-field" />
+            <TextField fx:id="plaintextField" layoutX="112.0" layoutY="374.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" style="-fx-alignment: center;" styleClass="sign-in-text-field" visible="false" />
+            <PasswordField fx:id="passwordField" layoutX="112.0" layoutY="374.0" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" promptText="Enter your password" style="-fx-alignment: center;" styleClass="sign-in-text-field" />
+            <JFXCheckBox checkedColor="#274c77" layoutX="113.0" layoutY="437.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="119.0" styleClass="custom-jfx-check-box" text="Keep me logged in" textFill="#8b8c89" unCheckedColor="#8b8c89">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </JFXCheckBox>
+            <Label fx:id="loginInvalidLabel" layoutX="112.0" layoutY="252.0" textFill="#fa4454" wrapText="true" />
+            <Label fx:id="specialCharLabel" layoutX="112.0" layoutY="252.0" textFill="#fa4454" />
+            <Label focusTraversable="false" layoutX="385.0" layoutY="388.0">
+               <graphic>
+                  <FontIcon fx:id="eyeIcon" iconColor="#c6c6c6" iconLiteral="fa-eye-slash" iconSize="16" onMouseClicked="#revealPassword" styleClass="eye-icon" text="" visible="false" />
+               </graphic>
+            </Label>
+            <Pane fx:id="loadingPane" prefHeight="720.0" prefWidth="533.0" style="-fx-background-color: #FFFFFF;" visible="false">
+               <children>
+                  <Circle fill="TRANSPARENT" layoutX="266.0" layoutY="321.0" radius="36.0" stroke="#274c77" strokeWidth="3.0" />
+                  <Circle fx:id="loadingCircle" fill="TRANSPARENT" layoutX="266.0" layoutY="321.0" radius="36.0" stroke="#8b8c89ad" strokeWidth="3.3" style="-fx-stroke-dash-array: 170;" />
+               </children>
+            </Pane>
+            <ImageView fitHeight="34.0" fitWidth="149.0" layoutX="187.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bioscraper-text-logo.png" />
+               </image>
+            </ImageView>
+            <FontIcon fx:id="userIcon" iconColor="#8b8c89" iconLiteral="fa-user" layoutX="130.0" layoutY="325.0" />
+            <FontIcon fx:id="lockIcon" iconColor="#8b8c89" iconLiteral="fa-lock" layoutX="130.0" layoutY="400.0" />
+            <Pane layoutX="532.0" prefHeight="720.0" prefWidth="749.0" style="-fx-background-color: #274C77;">
+               <children>
+                  <ImageView fitHeight="732.0" fitWidth="766.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@background.png" />
+                     </image>
+                  </ImageView>
+                  <Pane fx:id="homePane1" layoutX="162.0" layoutY="111.0" prefHeight="521.0" prefWidth="514.0">
+                     <children>
+                        <HBox alignment="CENTER" layoutX="162.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="194.0" spacing="10.0">
+                           <children>
+                              <Circle fx:id="homeCircle" fill="#6096ba" radius="3.5" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="myTeamCircle" fill="#c7c7c7" radius="3.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="scheduleCircle" fill="#c7c7c7" radius="3.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <ImageView fitHeight="378.0" fitWidth="341.0" layoutX="77.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@slideshow1.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="193.0" layoutY="408.0" text="Curated for Businesses" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="91.0" layoutY="425.0" prefHeight="34.0" prefWidth="354.0" text="Target your audience with keywords and see the results instantly." textAlignment="CENTER" textFill="#ffffffa3" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="homePane2" layoutX="162.0" layoutY="111.0" prefHeight="521.0" prefWidth="514.0" visible="false">
+                     <children>
+                        <HBox alignment="CENTER" layoutX="160.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="194.0" spacing="10.0">
+                           <children>
+                              <Circle fx:id="homeCircle1" fill="#c7c7c7" radius="3.5" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="myTeamCircle1" fill="#6096ba" radius="3.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="scheduleCircle1" fill="#c7c7c7" radius="3.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <ImageView fitHeight="378.0" fitWidth="297.0" layoutX="56.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@slideshow2.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="193.0" layoutY="408.0" text="See the latest trends" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="137.0" layoutY="425.0" prefHeight="34.0" prefWidth="241.0" text="Learn more about your target demographic." textAlignment="CENTER" textFill="#ffffffa3" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="homePane3" layoutX="162.0" layoutY="111.0" prefHeight="521.0" prefWidth="514.0" visible="false">
+                     <children>
+                        <HBox alignment="CENTER" layoutX="160.0" layoutY="466.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="194.0" spacing="10.0">
+                           <children>
+                              <Circle fx:id="homeCircle11" fill="#c7c7c7" radius="3.5" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="myTeamCircle11" fill="#c7c7c7" radius="3.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="scheduleCircle11" fill="#6096ba" radius="3.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <ImageView fitHeight="378.0" fitWidth="341.0" layoutX="83.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@slideshow3.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="203.0" layoutY="408.0" text="Analyze your data" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="116.0" layoutY="417.0" prefHeight="58.0" prefWidth="313.0" text="Retrieve Instagram handles, follower counts, and profile information in a formatted Excel sheet for your needs." textAlignment="CENTER" textFill="#ffffffa3" wrapText="true" />
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="mainWindow" prefHeight="720.0" prefWidth="1280.0" visible="false">
+         <children>
+            <ImageView fitHeight="747.0" fitWidth="1306.0" layoutX="-6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bg-one.png" />
+               </image>
+            </ImageView>
+            <Pane fx:id="settingsPane" focusTraversable="true" layoutX="363.0" layoutY="115.0" prefHeight="505.0" prefWidth="508.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10 10 10 10;">
+               <children>
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-exclamation-circle" iconSize="20" layoutX="467.0" layoutY="49.0" wrappingWidth="16.0" />
+                  <Label layoutX="189.0" layoutY="29.0" text="Search Settings">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="72.0" layoutY="93.0" text="Instagram Handle:" />
+                  <Label layoutX="72.0" layoutY="135.0" text="Input Stream:" />
+                  <Label layoutX="72.0" layoutY="258.0" text="Include Followers" />
+                  <Label layoutX="72.0" layoutY="306.0" text="Include Biographies" />
+                  <Label layoutX="72.0" layoutY="353.0" text="Include Full Names" />
+                  <Label layoutX="72.0" layoutY="403.0" text="Export Data To:" />
+                  <TextField fx:id="handleField" focusTraversable="false" layoutX="189.0" layoutY="89.0" prefHeight="12.0" prefWidth="205.0" promptText="Enter a valid Instagram username" styleClass="sign-in-text-field" />
+                  <TextField fx:id="inputField" editable="false" layoutX="189.0" layoutY="131.0" prefHeight="12.0" prefWidth="205.0" styleClass="sign-in-text-field" />
+                  <TextField fx:id="outputField" editable="false" layoutX="191.0" layoutY="399.0" prefHeight="12.0" prefWidth="205.0" styleClass="sign-in-text-field" />
+                  <Button fx:id="inputBrowse" layoutX="412.0" layoutY="131.0" mnemonicParsing="false" onAction="#onInputAction" prefHeight="25.0" prefWidth="71.0" styleClass="login-button" text="Browse" textFill="WHITE" />
+                  <Button layoutX="414.0" layoutY="399.0" mnemonicParsing="false" onAction="#onOutputAction" prefHeight="25.0" prefWidth="71.0" styleClass="login-button" text="Browse" textFill="WHITE" />
+                  <Button fx:id="startSearch" alignment="CENTER" disable="true" layoutX="139.0" layoutY="444.0" mnemonicParsing="false" onAction="#onSearchAction" prefHeight="34.0" prefWidth="231.0" styleClass="login-button" text="Start Search" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-user-circle" iconSize="15" layoutX="39.0" layoutY="106.0" text="" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-file-text" iconSize="15" layoutX="40.0" layoutY="148.0" text="" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-users" iconSize="15" layoutX="39.0" layoutY="271.0" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-pencil-square" iconSize="18" layoutX="39.0" layoutY="322.0" text="" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-address-card" iconSize="15" layoutX="39.0" layoutY="367.0" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-file-excel-o" iconSize="15" layoutX="39.0" layoutY="416.0" />
+                  <JFXToggleButton fx:id="lightSwitch" contentDisplay="CENTER" layoutX="187.0" layoutY="253.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXToggleButton>
+                  <JFXToggleButton fx:id="lightSwitch1" contentDisplay="CENTER" layoutX="187.0" layoutY="300.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXToggleButton>
+                  <JFXToggleButton fx:id="lightSwitch11" contentDisplay="CENTER" layoutX="187.0" layoutY="347.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXToggleButton>
+                  <Label fx:id="settingsWarningLabel" layoutX="72.0" layoutY="65.0" textFill="#fa4454" />
+                  <Label layoutX="99.0" layoutY="176.0" text="OR" />
+                  <Label layoutX="72.0" layoutY="212.0" text="Enter Keywords:" />
+                  <TextField fx:id="entryField" layoutX="189.0" layoutY="208.0" onKeyPressed="#onInputEnterPressed" prefHeight="12.0" prefWidth="205.0" promptText="Enter one-by-one" styleClass="sign-in-text-field" />
+                  <Label fx:id="entrySuccess" layoutX="191.0" layoutY="187.0" textFill="#74db8c" />
+                  <Label fx:id="entryFailure" layoutX="191.0" layoutY="187.0" textFill="#fa4454" />
+                  <Button fx:id="submitButton" layoutX="412.0" layoutY="208.0" mnemonicParsing="false" onAction="#onSubmitAction" prefHeight="25.0" prefWidth="71.0" styleClass="login-button" text="Submit" textFill="WHITE" />
+               </children></Pane>
+            <Pane fx:id="settingsLoad" layoutX="363.0" layoutY="115.0" prefHeight="505.0" prefWidth="508.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10 10 10 10;" visible="false">
+               <children>
+                  <Circle fill="TRANSPARENT" layoutX="254.0" layoutY="252.0" radius="36.0" stroke="#274c77" strokeWidth="3.0" />
+                  <Circle fx:id="settingsCircle" fill="TRANSPARENT" layoutX="254.0" layoutY="252.0" radius="36.0" stroke="#8b8c89ad" strokeWidth="3.0" style="-fx-stroke-dash-array: 170;" />
+               </children>
+            </Pane>
+            <Pane fx:id="consolePane" layoutX="113.0" layoutY="72.0" prefHeight="591.0" prefWidth="1068.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10 10 10 10;" visible="false">
+               <children>
+                  <Label layoutX="482.0" layoutY="14.0" text="Console Log">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="consoleLogs" editable="false" layoutX="35.0" layoutY="49.0" prefHeight="493.0" prefWidth="977.0" styleClass="sign-in-text-field" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="1280.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimizeWindow" prefHeight="35.0" prefWidth="35.0" styleClass="sign-in-top-button">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fa-minus" />
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#redirectSignIn" prefHeight="35.0" prefWidth="35.0" styleClass="sign-in-top-button">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fa-question" />
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#closeWindow" prefHeight="35.0" prefWidth="35.0" styleClass="sign-in-x-button">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fa-close" />
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

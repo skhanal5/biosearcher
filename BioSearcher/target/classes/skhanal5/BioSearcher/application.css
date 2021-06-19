@@ -1,0 +1,58 @@
+.sign-in-top-button:hover{
+	-fx-background-color: rgba(0,0,0,.1);
+}
+
+.sign-in-x-button:hover{
+	-fx-background-color: rgba(0,0,0,.1);
+}
+
+.login-button{
+	-fx-background-color:#274C77;
+	-fx-background-radius: 8 8 8 8;
+}
+
+.login-button:hover{
+	-fx-background-color:#274C77;
+	-fx-cursor:hand;
+}
+
+.login-button:disabled, .login-button:disabled > * {
+	-fx-background-color: rgba(38,75,117,.5);
+	-fx-background-radius: 8 8 8 8;
+}
+
+.login-icon:disabled, .login-icon:disabled > * {
+	-fx-icon-color: rgba(38,75,117,.5);
+}
+
+.eye-icon:hover{
+	-fx-cursor:hand;
+}
+
+.hyperlinks, .hyperlinks:active{
+	-fx-border-color:transparent;
+	-fx-underline: false;
+	-fx-text-fill: rgba(136,137,132,.8)
+}
+
+.hyperlinks:hover{
+	-fx-text-fill:#8B8C89;
+	-fx-underline: false;
+}
+
+.sign-in-text-field{
+	-fx-background-radius: 8 8 8 8;
+	-fx-background-color:  #f0f6fd;
+}
+
+.sign-in-text-field:focused{
+
+}
+
+.sign-in-text-field:hover{
+
+}
+
+.sign-in-text-field:focused:hover{
+
+}
