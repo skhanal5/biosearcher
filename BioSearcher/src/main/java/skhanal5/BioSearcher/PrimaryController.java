@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -787,6 +789,12 @@ public class PrimaryController implements Initializable {
 		bioToggle.setSelected(false);
 		nameToggle.setSelected(false);
 		settingsLoadingAnimation();
+	}
+	
+	@FXML
+	private void onHelpSelect(MouseEvent event) throws Exception {
+		Desktop.getDesktop().browse(
+				new URL("https://github.com/skhanal5/biosearcher/wiki/How-To").toURI());
 	}
 
 }

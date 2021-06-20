@@ -22,6 +22,11 @@
    <children>
       <Pane fx:id="signInPane" nodeOrientation="LEFT_TO_RIGHT" prefHeight="720.0" prefWidth="533.0" style="-fx-background-color: #FFFFFF;">
          <children>
+            <ImageView fitHeight="34.0" fitWidth="149.0" layoutX="187.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bioscraper-text-logo.png" />
+               </image>
+            </ImageView>
             <Hyperlink layoutX="207.0" layoutY="594.0" onMouseClicked="#createAccount" styleClass="hyperlinks" text="Create Account">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -82,11 +87,6 @@
                   <Circle fx:id="loadingCircle" fill="TRANSPARENT" layoutX="266.0" layoutY="321.0" radius="36.0" stroke="#8b8c89ad" strokeWidth="3.3" style="-fx-stroke-dash-array: 170;" />
                </children>
             </Pane>
-            <ImageView fitHeight="34.0" fitWidth="149.0" layoutX="187.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@bioscraper-text-logo.png" />
-               </image>
-            </ImageView>
             <FontIcon fx:id="userIcon" iconColor="#8b8c89" iconLiteral="fa-user" layoutX="130.0" layoutY="325.0" />
             <FontIcon fx:id="lockIcon" iconColor="#8b8c89" iconLiteral="fa-lock" layoutX="130.0" layoutY="400.0" />
             <Pane layoutX="532.0" prefHeight="720.0" prefWidth="749.0" style="-fx-background-color: #274C77;">
@@ -175,7 +175,7 @@
             </ImageView>
             <Pane fx:id="settingsPane" focusTraversable="true" layoutX="363.0" layoutY="115.0" prefHeight="505.0" prefWidth="508.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10 10 10 10;">
                <children>
-                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-exclamation-circle" iconSize="20" layoutX="467.0" layoutY="49.0" styleClass="eye-icon" wrappingWidth="16.0" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-exclamation-circle" iconSize="20" layoutX="467.0" layoutY="49.0" onMouseClicked="#onHelpSelect" styleClass="eye-icon" wrappingWidth="16.0" />
                   <Label layoutX="189.0" layoutY="29.0" text="Search Settings">
                      <font>
                         <Font name="System Bold" size="18.0" />
