@@ -26,6 +26,10 @@ I am currently working on adding comments and making the code more comprehensive
 ## Built With
   * [Instagram4J](https://github.com/instagram4j/instagram4j) - Utilized wrapper to have access to Instagram Private API
 
+## Acknowledgments
+
+  * [COOL IT HELP](https://www.coolithelp.com/2020/06/javafx-redirect-console-output-to.html) - Used guides to build parts of program
+
 ## Author
 * **Subodh Khanal**
 
