@@ -32,7 +32,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Hyperlink>
-            <Label layoutX="113.0" layoutY="173.0" text="Welcome Back!">
+            <Label graphicTextGap="0.0" layoutX="113.0" layoutY="173.0" text="Welcome Back!">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -47,14 +47,26 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Label layoutX="112.0" layoutY="275.0" text="Username" />
+            <Label layoutX="112.0" layoutY="275.0" text="Username">
+               <font>
+                  <Font name="☞Nexa Bold" size="12.0" />
+               </font></Label>
             <Label layoutX="112.0" layoutY="351.0" text="Password" />
-            <TextField fx:id="usernameField" layoutX="112.0" layoutY="298.0" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" promptText="Enter your username" style="-fx-alignment: center;" styleClass="sign-in-text-field" />
-            <TextField fx:id="plaintextField" layoutX="112.0" layoutY="374.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" style="-fx-alignment: center;" styleClass="sign-in-text-field" visible="false" />
-            <PasswordField fx:id="passwordField" layoutX="112.0" layoutY="374.0" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" promptText="Enter your password" style="-fx-alignment: center;" styleClass="sign-in-text-field" />
+            <TextField fx:id="usernameField" layoutX="112.0" layoutY="298.0" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" promptText="Enter your username" style="-fx-alignment: center;" styleClass="sign-in-text-field">
+               <font>
+                  <Font name="☞Nexa Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="plaintextField" layoutX="112.0" layoutY="374.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" style="-fx-alignment: center;" styleClass="sign-in-text-field" visible="false">
+               <font>
+                  <Font name="☞Nexa Bold" size="12.0" />
+               </font></TextField>
+            <PasswordField fx:id="passwordField" layoutX="112.0" layoutY="374.0" onKeyPressed="#onEnterPressed" prefHeight="45.0" prefWidth="302.0" promptText="Enter your password" style="-fx-alignment: center;" styleClass="sign-in-text-field">
+               <font>
+                  <Font name="☞Nexa Bold" size="12.0" />
+               </font></PasswordField>
             <JFXCheckBox checkedColor="#274c77" layoutX="113.0" layoutY="437.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="119.0" styleClass="custom-jfx-check-box" text="Keep me logged in" textFill="#8b8c89" unCheckedColor="#8b8c89">
                <font>
-                  <Font size="11.0" />
+                  <Font name="☞Nexa Bold" size="11.0" />
                </font>
             </JFXCheckBox>
             <Label fx:id="loginInvalidLabel" layoutX="112.0" layoutY="252.0" textFill="#fa4454" wrapText="true" />
@@ -163,7 +175,7 @@
             </ImageView>
             <Pane fx:id="settingsPane" focusTraversable="true" layoutX="363.0" layoutY="115.0" prefHeight="505.0" prefWidth="508.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10 10 10 10;">
                <children>
-                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-exclamation-circle" iconSize="20" layoutX="467.0" layoutY="49.0" wrappingWidth="16.0" />
+                  <FontIcon iconColor="#8b8c89" iconLiteral="fa-exclamation-circle" iconSize="20" layoutX="467.0" layoutY="49.0" styleClass="eye-icon" wrappingWidth="16.0" />
                   <Label layoutX="189.0" layoutY="29.0" text="Search Settings">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -191,17 +203,17 @@
                   <FontIcon iconColor="#8b8c89" iconLiteral="fa-pencil-square" iconSize="18" layoutX="39.0" layoutY="322.0" text="" />
                   <FontIcon iconColor="#8b8c89" iconLiteral="fa-address-card" iconSize="15" layoutX="39.0" layoutY="367.0" />
                   <FontIcon iconColor="#8b8c89" iconLiteral="fa-file-excel-o" iconSize="15" layoutX="39.0" layoutY="416.0" />
-                  <JFXToggleButton fx:id="lightSwitch" contentDisplay="CENTER" layoutX="187.0" layoutY="253.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
+                  <JFXToggleButton fx:id="followersToggle" contentDisplay="CENTER" layoutX="187.0" layoutY="253.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXToggleButton>
-                  <JFXToggleButton fx:id="lightSwitch1" contentDisplay="CENTER" layoutX="187.0" layoutY="300.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
+                  <JFXToggleButton fx:id="bioToggle" contentDisplay="CENTER" layoutX="187.0" layoutY="300.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXToggleButton>
-                  <JFXToggleButton fx:id="lightSwitch11" contentDisplay="CENTER" layoutX="187.0" layoutY="347.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
+                  <JFXToggleButton fx:id="nameToggle" contentDisplay="CENTER" layoutX="187.0" layoutY="347.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="53.0" text=" " toggleColor="#274c77" toggleLineColor="#8b8c89" unToggleLineColor="#8b8c89">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -227,7 +239,30 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="consoleLogs" editable="false" layoutX="35.0" layoutY="49.0" prefHeight="493.0" prefWidth="977.0" styleClass="sign-in-text-field" />
+                  <TextArea fx:id="consoleLogs" editable="false" layoutX="36.0" layoutY="49.0" prefHeight="493.0" prefWidth="977.0" styleClass="text-area">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></TextArea>
+               </children>
+            </Pane>
+            <Pane fx:id="finishedPane" layoutX="363.0" layoutY="115.0" prefHeight="505.0" prefWidth="508.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10 10 10 10;" visible="false">
+               <children>
+                  <FontIcon iconColor="#274c77" iconLiteral="fa-check-circle" iconSize="150" layoutX="189.0" layoutY="230.0" />
+                  <Label layoutX="219.0" layoutY="260.0" text="Success!" textFill="#274c77">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="157.0" layoutY="294.0" prefHeight="58.0" prefWidth="194.0" text="Your search has been completed." textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" layoutX="138.0" layoutY="399.0" mnemonicParsing="false" onAction="#onSuccessAction" prefHeight="45.0" prefWidth="231.0" styleClass="login-button" text="Continue" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
          </children>

@@ -1,12 +1,13 @@
 package skhanal5.BioSearcher;
 
 import java.awt.Desktop;
-import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -22,11 +25,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.slf4j.Logger;
 
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
+import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
 import com.github.instagram4j.instagram4j.models.user.Profile;
+import com.jfoenix.controls.JFXToggleButton;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
@@ -75,6 +79,9 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private Pane consolePane;
+	
+	@FXML
+	private Pane finishedPane;
 
 	@FXML
 	private Pane homePane1;
@@ -102,7 +109,7 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private TextField entryField;
-	
+
 	@FXML
 	private TextArea consoleLogs;
 
@@ -117,7 +124,16 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private Button submitButton;
-
+	
+	@FXML
+	private JFXToggleButton followersToggle;
+	
+	@FXML
+	private JFXToggleButton bioToggle;
+	
+	@FXML
+	private JFXToggleButton nameToggle;
+	
 	@FXML
 	private Button inputBrowse;
 
@@ -138,7 +154,7 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private Label entrySuccess;
-	
+
 	@FXML
 	private Label entryFailure;
 
@@ -152,17 +168,27 @@ public class PrimaryController implements Initializable {
 	private FontIcon lockIcon;
 
 	private ArrayList<String> keywords = new ArrayList<String>();
-	private List<Profile> results;
 	private double xOffset = 0;
 	private double yOffset = 0;
 	private int pos = 0;
 	private HashSet<String> followersSet = new HashSet<String>();
 	private HashMap<String, ArrayList<String>> extractedList = new HashMap<String, ArrayList<String>>();
 	private IGClient client;
+	private boolean getFollowers;
+	private boolean getBio;
+	private boolean getNames;
+	private final PipedInputStream pipeIn = new PipedInputStream();
+	private final PipedInputStream pipeIn2 = new PipedInputStream();
+	Thread errorThrower;
+	private Thread reader;
+	private Thread reader2;
+	boolean quit;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		executeReaderThreads(); // not proper way of handling this consider
+								// relocating
 		Pane[] infoPane = { homePane1, homePane2, homePane3 };
 		Timeline fiveSecondsWonder = new Timeline(
 				new KeyFrame(Duration.seconds(7), event -> {
@@ -308,46 +334,48 @@ public class PrimaryController implements Initializable {
 					}
 				});
 
-		BooleanBinding checkEntries = 
-				settingsWarningLabel.textProperty().isNotEmpty()
-					.or(inputField.textProperty().isNotEmpty());
+		BooleanBinding checkEntries = settingsWarningLabel.textProperty()
+				.isNotEmpty().or(inputField.textProperty().isNotEmpty());
 
-		BooleanBinding checkFields = 
-				specialCharLabel.textProperty().isNotEmpty()
-					.or(usernameField.textProperty().length().lessThanOrEqualTo(3))
-						.or(usernameField.textProperty().length().greaterThanOrEqualTo(15))
-							.or(passwordField.textProperty().isEmpty());
-	
+		BooleanBinding checkFields = specialCharLabel.textProperty()
+				.isNotEmpty()
+				.or(usernameField.textProperty().length().lessThanOrEqualTo(3))
+				.or(usernameField.textProperty().length()
+						.greaterThanOrEqualTo(15))
+				.or(passwordField.textProperty().isEmpty());
+
 		loginButton.disableProperty().bind(checkFields);
 		submitButton.disableProperty().bind(checkEntries);
-		
+
 		submitButton.disableProperty()
-		.addListener((observable, oldValue, newValue) -> {
-			if(submitButton.isDisabled()) {
-				BooleanBinding checkSettings = 
-						settingsWarningLabel.textProperty().isNotEmpty()
-							.or(handleField.textProperty().isEmpty())
+				.addListener((observable, oldValue, newValue) -> {
+					if (submitButton.isDisabled()) {
+						BooleanBinding checkSettings = settingsWarningLabel
+								.textProperty().isNotEmpty()
+								.or(handleField.textProperty().isEmpty())
 								.or(outputField.textProperty().isEmpty());
-				startSearch.disableProperty().bind(checkSettings);
-			}
-		});
-		
+						startSearch.disableProperty().bind(checkSettings);
+					}
+				});
+
 		inputBrowse.disableProperty()
-		.addListener((observable, oldValue, newValue) -> {
-			if(inputBrowse.isDisabled()) {
-				BooleanBinding checkSettings = 
-						settingsWarningLabel.textProperty().isNotEmpty()
-							.or(handleField.textProperty().isEmpty())
+				.addListener((observable, oldValue, newValue) -> {
+					if (inputBrowse.isDisabled()) {
+						BooleanBinding checkSettings = settingsWarningLabel
+								.textProperty().isNotEmpty()
+								.or(handleField.textProperty().isEmpty())
 								.or(outputField.textProperty().isEmpty())
-									.or(inputBrowse.disableProperty().not());
-				startSearch.disableProperty().bind(checkSettings);
-			}
-		});
-		
-		startSearch.disableProperty().bind(settingsWarningLabel.textProperty().isEmpty());
+								.or(inputBrowse.disableProperty().not());
+						startSearch.disableProperty().bind(checkSettings);
+					}
+				});
+
+		startSearch.disableProperty()
+				.bind(settingsWarningLabel.textProperty().isEmpty());
 		entryField.editableProperty().bind(inputField.textProperty().isEmpty());
 		eyeIcon.disableProperty().bind(passwordField.textProperty().isEmpty());
-		eyeIcon.visibleProperty().bind(passwordField.textProperty().isNotEmpty());
+		eyeIcon.visibleProperty()
+				.bind(passwordField.textProperty().isNotEmpty());
 		dragStage();
 	}
 
@@ -425,10 +453,12 @@ public class PrimaryController implements Initializable {
 				});
 			} catch (IGLoginException e) {
 				Platform.runLater(() -> {
-					if(e.getMessage().contains("The username you entered doesn't appear to belong to an account.")) {
-						loginInvalidLabel.setText("Please check your username and try again.");
+					if (e.getMessage().contains(
+							"The username you entered doesn't appear to belong to an account.")) {
+						loginInvalidLabel.setText(
+								"Please check your username and try again.");
 					} else {
-						loginInvalidLabel.setText(e.getMessage());	
+						loginInvalidLabel.setText(e.getMessage());
 					}
 					usernameField.setText("");
 					passwordField.setText("");
@@ -493,6 +523,7 @@ public class PrimaryController implements Initializable {
 		if (selectedFile != null) {
 			inputField.setText(selectedFile.getAbsolutePath());
 		}
+		parseInputStream();
 	}
 
 	@FXML
@@ -521,6 +552,35 @@ public class PrimaryController implements Initializable {
 		});
 	}
 
+	private void consoleLoadingAnimation() {
+		settingsPane.setDisable(true);
+		settingsLoad.setVisible(true);
+		RotateTransition rotation = new RotateTransition(Duration.seconds(2),
+				settingsCircle);
+		rotation.setByAngle(360);
+		rotation.play();
+		rotation.setOnFinished(event -> {
+			settingsLoad.setVisible(false);
+			settingsPane.setDisable(false);
+			consolePane.setVisible(true);
+		});
+	}
+	
+	private void finishedLoadingAnimation() {
+		consolePane.setVisible(false);
+		settingsPane.setDisable(true);
+		settingsLoad.setVisible(true);
+		RotateTransition rotation = new RotateTransition(Duration.seconds(2),
+				settingsCircle);
+		rotation.setByAngle(360);
+		rotation.play();
+		rotation.setOnFinished(event -> {
+			settingsLoad.setVisible(false);
+			settingsPane.setDisable(false);
+			finishedPane.setVisible(true);
+		});
+	}
+
 	@FXML
 	private void onSubmitAction(ActionEvent event) {
 		if (entryField.getText().equals("")) {
@@ -546,85 +606,187 @@ public class PrimaryController implements Initializable {
 				settingsPane.requestFocus();
 				entryField.setText("");
 				inputBrowse.setDisable(true);
+
 			}
 		}
 	}
 
 	@FXML
 	private void onSearchAction(ActionEvent event) {
-		try {
-			 results = client.actions().users().findByUsername(handleField.getText())
-						.thenApply(userAction -> 
-				            userAction.followersFeed().stream().flatMap(feedUsersResponse -> feedUsersResponse.getUsers().stream()).collect(Collectors.toList())
-				               ).join();
-			settingsLoadingAnimation();
-			consolePane.setVisible(true);
+	
+		getFollowers = followersToggle.isSelected() ? true : false;
+		getBio = bioToggle.isSelected() ? true : false;
+		getNames = nameToggle.isSelected() ? true : false;
 		
-			
-	        OutputStream os = new TextAreaOutputStream(consoleLogs);
-	        MyStaticOutputStreamAppender.setStaticOutputStream(os);
-			
-			for (Profile p : results) {
-				p.get("biography");
-				followersSet.add(p.getUsername());
-	        }
-			
-			
-			for (String follower : followersSet) {
+		new Thread(() -> {
+			try {
+				client.actions().users().findByUsername(handleField.getText())
+						.get().getUser();
+				Platform.runLater(() -> {
+					consoleLoadingAnimation();
+				});
+				List<Profile> results = client.actions().users()
+						.findByUsername(handleField.getText())
+						.thenApply(userAction -> userAction.followingFeed()
+								.stream()
+								.flatMap(feedUsersResponse -> feedUsersResponse
+										.getUsers().stream())
+								.collect(Collectors.toList()))
+						.join();
+
+				Thread.sleep(30000);
+				
+				for (Profile p : results) {
+					followersSet.add(p.getUsername());
+					Thread.sleep(3000);	//may break everything
+				}
+
+				for (String follower : followersSet) {
 					Thread.sleep(3000);
-					String bio = client.actions().users().findByUsername(follower).get().getUser().getBiography();
-					if (Arrays.stream(keywords.toArray(new String[0])).parallel().anyMatch(bio::contains)) {
+					String bio = client.actions().users()
+							.findByUsername(follower).get().getUser()
+							.getBiography();
+					if (Arrays.stream(keywords.toArray(new String[0]))
+							.parallel().anyMatch(bio::contains)) {
 						ArrayList<String> userInfo = new ArrayList<String>();
-						userInfo.add(bio);
-						Thread.sleep(3000);
-						userInfo.add(client.actions().users().findByUsername(follower).get().getUser().getFollower_count() + "");
-						Thread.sleep(3000);
-						userInfo.add(client.actions().users().findByUsername(follower).get().getUser().getFull_name());
+						if (getBio) {
+							userInfo.add(bio);
+							Thread.sleep(3000);	
+						}
+						if (getFollowers) {
+							userInfo.add(client.actions().users()
+									.findByUsername(follower).get().getUser()
+									.getFollower_count() + "");
+							Thread.sleep(3000);	
+						}
+						if (getNames) {
+							userInfo.add(client.actions().users()
+									.findByUsername(follower).get().getUser()
+									.getFull_name());
+							Thread.sleep(3000);
+						}
 						extractedList.put(follower, userInfo);
 					}
-			}
-			
-			Workbook workbook = new XSSFWorkbook();
-			Sheet spreadSheet = workbook.createSheet("Extracted handles");
-			int rowNum = 0;
-			for (String handle : extractedList.keySet()) {
-				Row row = spreadSheet.createRow(rowNum++);
-				int cellVal = 0;
-				Cell cell = row.createCell(cellVal++);
-				cell.setCellValue(handle);
-				ArrayList<String> curr = extractedList.get(handle);
-				for (String userInfo : curr) {
-					cell = row.createCell(cellVal++);
-					cell.setCellValue(userInfo);
 				}
+
+				Workbook workbook = new XSSFWorkbook();
+				Sheet spreadSheet = workbook.createSheet("Extracted handles");
+				int rowNum = 0;
+				for (String handle : extractedList.keySet()) {
+					Row row = spreadSheet.createRow(rowNum++);
+					int cellVal = 0;
+					Cell cell = row.createCell(cellVal++);
+					cell.setCellValue(handle);
+					ArrayList<String> curr = extractedList.get(handle);
+					for (String userInfo : curr) {
+						cell = row.createCell(cellVal++);
+						cell.setCellValue(userInfo);
+					}
+				}
+
+				FileOutputStream out = new FileOutputStream(
+						new File(outputField.getText()));
+				workbook.write(out);
+				workbook.close();
+				out.close();
+				closeThread();
+				
+				Platform.runLater(() -> {
+					finishedLoadingAnimation();
+				});
+			} catch (IGResponseException e) {
+				Platform.runLater(() -> {
+					if (e.getMessage().contains("User not found")) {
+						settingsLoadingAnimation();
+						settingsWarningLabel.setText(
+								"Invalid Instagram handle. Please retype and try again.");
+					} else if (e.getMessage().contains("Please wait a few minutes before you try again.")){
+						try {
+							Thread.sleep(300000);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						settingsLoadingAnimation();
+						settingsWarningLabel.setText(e.getMessage());
+					}
+				});
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
 			}
-			
-			FileOutputStream out = new FileOutputStream(new File(outputField.getText()));
-			workbook.write(out);
-			workbook.close();
-			out.close();
-		} catch (Exception e) {
-			if (e.getMessage().contains("User not found")) {
-				settingsWarningLabel.setText("Invalid Instagram handle. Please retype and try again.");	
-			} else {
-				settingsWarningLabel.setText(e.getMessage());	
+		}).start();
+	}
+
+	private void executeReaderThreads() {
+		try {
+			PipedOutputStream pout = new PipedOutputStream(this.pipeIn);
+			System.setOut(new PrintStream(pout, true));
+		} catch (IOException io) {
+		} catch (SecurityException se) {
+		}
+
+		try {
+			PipedOutputStream pout2 = new PipedOutputStream(this.pipeIn2);
+			System.setErr(new PrintStream(pout2, true));
+		} catch (IOException io) {
+		} catch (SecurityException se) {
+		}
+
+		ReaderThread obj = new ReaderThread(pipeIn, pipeIn2, errorThrower,
+				reader, reader2, quit, consoleLogs);
+
+	}
+
+	private void parseInputStream() {
+		try {
+			File myObj = new File(inputField.getText());
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();		
+				keywords.add(data);
 			}
-			settingsLoadingAnimation();
+			myReader.close();
+		} catch (FileNotFoundException e) {
+			settingsWarningLabel.setText(e.getMessage());
 		}
 	}
 	
-	 private static class TextAreaOutputStream extends OutputStream {
-
-	        private TextArea textArea;
-
-	        public TextAreaOutputStream(TextArea textArea) {
-	            this.textArea = textArea;
-	        }
-
-	        @Override
-	        public void write(int b) throws IOException {
-	            textArea.appendText(String.valueOf((char) b));
-	        }
-	    }
+	synchronized void closeThread() {
+		System.out.println("Search is finished.");
+		this.quit = true;
+		notifyAll();
+		try {
+			this.reader.join(1000L);
+			this.pipeIn.close();
+		} catch (Exception e) {
+		}
+		try {
+			this.reader2.join(1000L);
+			this.pipeIn2.close();
+		} catch (Exception e) {
+		}
+	}
+	
+	@FXML
+	private void onSuccessAction(ActionEvent event) {
+		finishedPane.setVisible(false);
+		keywords.clear();
+		followersSet.clear();
+		extractedList.clear();
+		inputField.clear();
+		consoleLogs.clear();
+		handleField.clear();
+		outputField.clear();
+		followersToggle.setSelected(false);
+		bioToggle.setSelected(false);
+		nameToggle.setSelected(false);
+		settingsLoadingAnimation();
+	}
 
 }
