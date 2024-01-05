@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="500px" src="https://user-images.githubusercontent.com/74752121/122131096-a8ad7e00-ce06-11eb-8099-b99763ac113a.png">
+  <img width="300px" src="https://github.com/skhanal5/biosearcher/assets/74752121/6467cad9-dfe3-4f86-b6c9-a70b708efdd9">
 </p>
 
 ![language](https://img.shields.io/github/languages/top/skhanal5/biosearcher)
